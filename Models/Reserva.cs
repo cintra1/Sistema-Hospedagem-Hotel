@@ -47,7 +47,6 @@ namespace DesafioProjetoHospedagem.Models
 
             if (valores.Length == 3)
             {
-                // Atribui os valores às variáveis correspondentes
                 string tipo = valores[0];
 
                 if (int.TryParse(valores[1], out int capac) &&
@@ -68,27 +67,22 @@ namespace DesafioProjetoHospedagem.Models
 
         public int ObterQuantidadeHospedes()
         {
-            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
-            // *IMPLEMENTE AQUI*
             return Hospedes.Count();
         }
 
         public void QuantidadeHospedes()
         {
-            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
-            // *IMPLEMENTE AQUI*
             int quant = ObterQuantidadeHospedes();
             Console.WriteLine($"Quantidade de hospedes: {quant}");
+            for(int i = 0; i < Hospedes.Count(); i++){
+                Console.WriteLine($" N° {i + 1}: {Hospedes[i].Nome}");
+            }
         }
 
         public decimal CalcularValorDiaria()
         {
-            // TODO: Retorna o valor da diária
-            // Cálculo: DiasReservados X Suite.ValorDiaria
             decimal valor = (DiasReservados * Suite.ValorDiaria);
 
-            // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
-            // *IMPLEMENTE AQUI*
             if (DiasReservados >= 10)
             {
                 valor = valor * 0.9M;

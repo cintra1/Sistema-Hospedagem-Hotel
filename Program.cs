@@ -42,7 +42,6 @@ while (exibirMenu)
             if (res.Hospedes != null && res.Hospedes.Count > 0 && res.Suite != null)
             {
                 Console.WriteLine("Reserva criada com sucesso!");
-                // Aqui você pode adicionar qualquer lógica adicional relacionada à criação da reserva
             }
             else
             {
