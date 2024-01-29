@@ -11,29 +11,59 @@ namespace DesafioProjetoHospedagem.Models
         public Reserva(int diasReservados)
         {
             DiasReservados = diasReservados;
+            Hospedes = new List<Pessoa>();
         }
 
         public void CadastrarHospedes(List<Pessoa> hospedes)
         {
-            int quantidadeHospedes = hospedes.Count();
-            int quantidadeHospedesSuportada = Suite.Capacidade;
-            // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
-            // *IMPLEMENTE AQUI*
-            if (quantidadeHospedes <= quantidadeHospedesSuportada)
+            if (Suite == null)
             {
-                Hospedes = hospedes;
+                Console.WriteLine("É necessário cadastrar uma suíte antes de adicionar hóspedes.");
+                return;
+            }
+
+            Console.WriteLine("Digite o nome do Hospede:");
+            string nome = "";
+            nome = Console.ReadLine();
+
+            Pessoa novoHospede = new Pessoa(nome);
+
+            if (Suite.Capacidade > Hospedes.Count)
+            {
+                Hospedes.Add(novoHospede);
+                Console.WriteLine($"Hóspede {nome} cadastrado com sucesso!");
             }
             else
             {
-                // TODO: Retornar uma exception caso a capacidade seja menor que o número de hóspedes recebido
-                // *IMPLEMENTE AQUI*
-                throw new Exception("A capacidade é menor que o número de hóspedes recebido.");
+                Console.WriteLine("A capacidade é menor que o número de hóspedes recebido, mude de Suite.");
             }
         }
 
-        public void CadastrarSuite(Suite suite)
+        public void CadastrarSuite()
         {
-            Suite = suite;
+            Console.WriteLine("Digite Tipo Suite, Capacidade, Valor Diaria (Com um espaço cada um):");
+            string entrada = Console.ReadLine();
+            string[] valores = entrada.Split(' ');
+
+            if (valores.Length == 3)
+            {
+                // Atribui os valores às variáveis correspondentes
+                string tipo = valores[0];
+
+                if (int.TryParse(valores[1], out int capac) &&
+                    decimal.TryParse(valores[2], out decimal diaria))
+                {
+                    Suite = new Suite(tipo, capac, diaria);
+                }
+                else
+                {
+                    Console.WriteLine("Erro ao converter valores para inteiros.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Forneça exatamente três valores separados por espaços.");
+            }
         }
 
         public int ObterQuantidadeHospedes()
@@ -41,6 +71,14 @@ namespace DesafioProjetoHospedagem.Models
             // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
             // *IMPLEMENTE AQUI*
             return Hospedes.Count();
+        }
+
+        public void QuantidadeHospedes()
+        {
+            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
+            // *IMPLEMENTE AQUI*
+            int quant = ObterQuantidadeHospedes();
+            Console.WriteLine($"Quantidade de hospedes: {quant}");
         }
 
         public decimal CalcularValorDiaria()
@@ -57,6 +95,11 @@ namespace DesafioProjetoHospedagem.Models
             }
 
             return valor;
+        }
+        public void ValorDiaria()
+        {
+            decimal valor = CalcularValorDiaria();
+            Console.WriteLine($"Preço diária: {valor}");
         }
     }
 }

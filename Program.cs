@@ -3,23 +3,72 @@ using DesafioProjetoHospedagem.Models;
 
 Console.OutputEncoding = Encoding.UTF8;
 
+Console.WriteLine("Seja bem vindo ao sistema de hospedagem!\n" +
+                  "Digite a quantidade de dias que você quer ficar no Hotel:");
+
+int diasReservados = Convert.ToInt32(Console.ReadLine());
+
+// Instancia a classe Suite
+Reserva res = new Reserva(diasReservados);
+
 // Cria os modelos de hóspedes e cadastra na lista de hóspedes
 List<Pessoa> hospedes = new List<Pessoa>();
 
-Pessoa p1 = new Pessoa(nome: "Hóspede 1");
-Pessoa p2 = new Pessoa(nome: "Hóspede 2");
+string opcao = string.Empty;
+bool exibirMenu = true;
 
-hospedes.Add(p1);
-hospedes.Add(p2);
+while (exibirMenu)
+{
+    Console.Clear();
+    Console.WriteLine("Digite a sua opção:");
+    Console.WriteLine("1 - Cadastrar pessoa (Nome)");
+    Console.WriteLine("2 - Adicionar Suite (Tipo Suite, Capacidade, Valor Diaria)");
+    Console.WriteLine("3 - Criar reserva");
+    Console.WriteLine("4 - Quantidade de Hospedes");
+    Console.WriteLine("5 - Valor diária");
+    Console.WriteLine("6 - Encerrar");
 
-// Cria a suíte
-Suite suite = new Suite(tipoSuite: "Premium", capacidade: 3, valorDiaria: 30);
+    switch (Console.ReadLine())
+    {
+        case "1":
+            res.CadastrarHospedes(hospedes);
+            break;
 
-// Cria uma nova reserva, passando a suíte e os hóspedes
-Reserva reserva = new Reserva(diasReservados: 10);
-reserva.CadastrarSuite(suite);
-reserva.CadastrarHospedes(hospedes);
+        case "2":
+            res.CadastrarSuite();
+            break;
 
-// Exibe a quantidade de hóspedes e o valor da diária
-Console.WriteLine($"Hóspedes: {reserva.ObterQuantidadeHospedes()}");
-Console.WriteLine($"Valor diária: {reserva.CalcularValorDiaria():F2}");
+        case "3":
+            if (res.Hospedes != null && res.Hospedes.Count > 0 && res.Suite != null)
+            {
+                Console.WriteLine("Reserva criada com sucesso!");
+                // Aqui você pode adicionar qualquer lógica adicional relacionada à criação da reserva
+            }
+            else
+            {
+                Console.WriteLine("Não é possível criar a reserva. Certifique-se de ter cadastrado pelo menos um hóspede e uma suíte.");
+            }
+            break;
+
+        case "4":
+            res.QuantidadeHospedes();
+            break;
+
+        case "5":
+            res.ValorDiaria();
+            break;
+
+        case "6":
+            exibirMenu = false;
+            break;
+
+        default:
+            Console.WriteLine("Opção inválida");
+            break;
+    }
+
+    Console.WriteLine("Pressione uma tecla para continuar");
+    Console.ReadLine();
+}
+
+Console.WriteLine("O programa se encerrou");
